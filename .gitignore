@@ -1,0 +1,25 @@
+# Private planning docs and design references
+project.md
+frontenddesign.md
+client/references/
+
+# Dependencies and build output
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+
+# Environment and secrets
+.env*
+!.env.example
+*.pem
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Old client-only git history, kept locally
+.client-git-backup/

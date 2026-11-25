@@ -1,0 +1,171 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-pixel: var(--font-geist-pixel-square);
+  --color-mint: var(--mint);
+  --color-leaf: var(--leaf);
+  --color-method-post: var(--method-post);
+  --color-stage: var(--stage);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b2a22;
+  --card: #ffffff;
+  --card-foreground: #0b2a22;
+  --popover: #ffffff;
+  --popover-foreground: #0b2a22;
+  --primary: #0b2a22;
+  --primary-foreground: #ffffff;
+  --secondary: #eff6f3;
+  --secondary-foreground: #0b2a22;
+  --muted: #eff6f3;
+  --muted-foreground: #4c635b;
+  --accent: #eff6f3;
+  --accent-foreground: #0b2a22;
+  --destructive: #b23a2b;
+  --border: #d6e4de;
+  --input: #d6e4de;
+  --ring: #0c7352;
+  --mint: #8cefc3;
+  --leaf: #0c7352;
+  --stage: #8cefc3;
+  --grain: rgb(11 42 34 / 0.2);
+  --method-post: #2455c3;
+  --radius: 0.75rem;
+  --nav-height: 68px;
+}
+
+.dark {
+  --background: #060c0a;
+  --foreground: #e9f4ef;
+  --card: #101d19;
+  --card-foreground: #e9f4ef;
+  --popover: #101d19;
+  --popover-foreground: #e9f4ef;
+  --primary: #8cefc3;
+  --primary-foreground: #06140f;
+  --secondary: #182a24;
+  --secondary-foreground: #e9f4ef;
+  --muted: #182a24;
+  --muted-foreground: #93aca2;
+  --accent: #182a24;
+  --accent-foreground: #e9f4ef;
+  --destructive: #ff9484;
+  --border: #21352e;
+  --input: #2c453c;
+  --ring: #8cefc3;
+  --leaf: #8cefc3;
+  --method-post: #8fb0ff;
+  --stage: #0a1411;
+  --grain: rgb(140 239 195 / 0.14);
+}
+
+@layer base {
+  /* One green that stays visible on white, mint and dark surfaces. */
+  ::selection {
+    background-color: #0c7352;
+    color: #ffffff;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  /* In-page links glide to their section unless reduced motion is on. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: calc(1200px + 2 * clamp(20px, 5vw, 48px));
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 48px);
+}
+
+@utility text-h1 {
+  font-family: var(--font-geist-pixel-square);
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+@utility text-h2 {
+  font-family: var(--font-geist-pixel-square);
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+@utility text-closing {
+  font-family: var(--font-geist-pixel-square);
+  font-size: clamp(1.75rem, 5.4vw, 4.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Fine dot grain for the mint stage. */
+@utility grain {
+  background-image: radial-gradient(var(--grain) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+}
+
+/*
+ * Hero entrance: hidden until GSAP takes over, so server HTML does not flash.
+ * The delayed animation reveals everything if the script never runs.
+ */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-enter] {
+    visibility: hidden;
+    animation: reveal 0s 3s forwards;
+  }
+}
+
+@keyframes reveal {
+  to {
+    visibility: visible;
+  }
+}
