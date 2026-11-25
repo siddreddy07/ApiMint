@@ -100,7 +100,6 @@ export function Navbar() {
             // Side by side, half the width each.
             <div className="grid grid-cols-2 gap-2">
               <Button
-                variant="outline"
                 size="pill"
                 className="px-2"
                 onClick={() => setAuthOpen(true)}
@@ -109,7 +108,7 @@ export function Navbar() {
               </Button>
               <Link
                 href={IMPORT_HREF}
-                className={buttonVariants({ size: "pill", className: "px-2" })}
+                className={buttonVariants({ variant:"outline", size: "pill", className: "px-2" })}
               >
                 Import your spec
               </Link>

@@ -82,12 +82,11 @@ export function Hero() {
           <div className="mt-5 grid grid-cols-2 gap-3 lg:flex">
             <Link
               href={IMPORT_HREF}
-              className={buttonVariants({ size: "pill", className: "px-2" })}
+              className={buttonVariants({ variant:"outline", size: "pill", className: "px-2" })}
             >
               Import your spec
             </Link>
             <Button
-              variant="outline"
               size="pill"
               className="px-2 lg:hidden"
               onClick={() => setAuthOpen(true)}
