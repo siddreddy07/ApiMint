@@ -1,41 +1,14 @@
 "use client"
 
-import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import { AuthDialog } from "@/components/home/auth-dialog"
+import { Logo } from "@/components/logo"
+import { StaggeredMenu } from "@/components/StaggeredMenu"
 import { Button, buttonVariants } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { IMPORT_HREF, NAV_LINKS, SIGN_IN_HREF } from "@/lib/home-data"
+import { IMPORT_HREF, NAV_LINKS } from "@/lib/home-data"
 import { cn } from "@/lib/utils"
-
-export function Logo() {
-  return (
-    <span className="inline-flex items-center gap-2 font-pixel text-2xl font-bold">
-      {/* A struck coin: mint disc with a notched edge. */}
-      <svg viewBox="0 0 24 24" className="size-7" aria-hidden="true">
-        <circle cx="12" cy="12" r="11" className="fill-mint" />
-        <circle
-          cx="12"
-          cy="12"
-          r="9.5"
-          fill="none"
-          strokeWidth="3"
-          strokeDasharray="1.2 2.53"
-          className="stroke-[#0b2a22]"
-        />
-        <circle cx="12" cy="12" r="4" className="fill-[#0b2a22]" />
-      </svg>
-      ApiMint
-    </span>
-  )
-}
 
 /** Scrolls to in-page sections without putting "#..." in the address bar. */
 function useCleanHashLinks() {
@@ -76,6 +49,8 @@ export function Navbar() {
   useCleanHashLinks()
   const [scrolled, setScrolled] = useState(false)
 
+  const [authOpen, setAuthOpen] = useState(false)
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
@@ -95,7 +70,7 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
@@ -108,60 +83,41 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="ml-auto hidden items-center gap-2 md:flex">
-          <Link
-            href={SIGN_IN_HREF}
-            className={buttonVariants({ variant: "ghost", size: "pill" })}
-          >
+        <div className="ml-auto hidden items-center gap-2 lg:flex">
+          <Button variant="ghost" size="pill" onClick={() => setAuthOpen(true)}>
             Sign in
-          </Link>
+          </Button>
           <Link href={IMPORT_HREF} className={buttonVariants({ size: "pill" })}>
             Import your spec
           </Link>
         </div>
-
-        <Sheet>
-          <SheetTrigger
-            render={
+      </nav>
+      {/* Phones and tablets. */}
+      <div className="lg:hidden">
+        <StaggeredMenu
+          items={NAV_LINKS.map(({ label, href }) => ({ label, link: href }))}
+          footer={
+            // Side by side, half the width each.
+            <div className="grid grid-cols-2 gap-2">
               <Button
-                variant="ghost"
-                size="icon-lg"
-                className="ml-auto size-11 md:hidden"
-              />
-            }
-          >
-            <MenuIcon className="size-5" />
-            <span className="sr-only">Open menu</span>
-          </SheetTrigger>
-          <SheetContent side="right" className="px-6 pt-16 pb-6">
-            <SheetTitle className="sr-only">Menu</SheetTitle>
-            {NAV_LINKS.map((link) => (
-              <SheetClose
-                key={link.href}
-                nativeButton={false}
-                render={<a href={link.href} />}
-                className="py-2 text-2xl font-semibold"
-              >
-                {link.label}
-              </SheetClose>
-            ))}
-            <div className="mt-auto flex flex-col gap-2">
-              <Link
-                href={SIGN_IN_HREF}
-                className={buttonVariants({ variant: "outline", size: "pill" })}
+                variant="outline"
+                size="pill"
+                className="px-2"
+                onClick={() => setAuthOpen(true)}
               >
                 Sign in
-              </Link>
+              </Button>
               <Link
                 href={IMPORT_HREF}
-                className={buttonVariants({ size: "pill" })}
+                className={buttonVariants({ size: "pill", className: "px-2" })}
               >
                 Import your spec
               </Link>
             </div>
-          </SheetContent>
-        </Sheet>
-      </nav>
+          }
+        />
+      </div>
+      <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
     </header>
   )
 }

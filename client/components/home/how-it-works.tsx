@@ -5,6 +5,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useRef } from "react"
 
+import { GrainPanel } from "@/components/grain-panel"
 import { ENDPOINTS, METHOD_COLORS, SERVER_URL } from "@/lib/home-data"
 import { cn } from "@/lib/utils"
 
@@ -125,11 +126,11 @@ export function HowItWorks() {
               <p className="mt-2 text-muted-foreground lg:min-h-18">
                 {step.text}
               </p>
-              <div className="mt-5 flex flex-1 items-center rounded-[20px] border border-transparent bg-stage grain p-3 sm:p-4 dark:border-border">
+              <GrainPanel className="mt-5 flex flex-1 items-center p-3 sm:p-4">
                 <div className="w-full space-y-3 font-mono text-xs leading-5">
                   {step.visual}
                 </div>
-              </div>
+              </GrainPanel>
             </li>
           ))}
         </ol>

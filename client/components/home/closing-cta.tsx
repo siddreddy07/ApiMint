@@ -4,7 +4,8 @@ import { motion, useInView, useReducedMotion } from "motion/react"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
-import { Logo } from "@/components/home/navbar"
+import { GrainPanel } from "@/components/grain-panel"
+import { Logo } from "@/components/logo"
 import { buttonVariants } from "@/components/ui/button"
 import { IMPORT_HREF, NAV_LINKS } from "@/lib/home-data"
 
@@ -18,7 +19,7 @@ export function ClosingCta() {
         aria-labelledby="closing-title"
         className="wrap flex flex-1 py-8"
       >
-        <div className="flex flex-1 flex-col items-center justify-center rounded-[20px] border border-transparent bg-stage grain px-4 py-12 text-center dark:border-border">
+        <GrainPanel className="flex flex-1 flex-col items-center justify-center px-4 py-12 text-center">
           <h2 id="closing-title" className="w-full text-closing">
             <span className="sr-only">
               Your API already works. Now use it from any MCP client.
@@ -35,7 +36,7 @@ export function ClosingCta() {
           >
             Import your spec
           </Link>
-        </div>
+        </GrainPanel>
       </section>
 
       <footer className="wrap">

@@ -7,6 +7,8 @@ import { AnimatePresence, MotionConfig, motion } from "motion/react"
 import Link from "next/link"
 import { useRef, useState } from "react"
 
+import { AuthDialog } from "@/components/home/auth-dialog"
+import { GrainPanel } from "@/components/grain-panel"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import {
@@ -27,6 +29,7 @@ const BOOKINGS = [
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
+  const [authOpen, setAuthOpen] = useState(false)
 
   useGSAP(
     () => {
@@ -75,20 +78,34 @@ export function Hero() {
             Bring your API. Choose your tools. Get a hosted MCP server that
             Claude, Cursor and other MCP clients can connect to.
           </p>
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+          {/* Below lg: two equal buttons, then the link across both. */}
+          <div className="mt-5 grid grid-cols-2 gap-3 lg:flex">
             <Link
               href={IMPORT_HREF}
-              className={buttonVariants({ size: "pill" })}
+              className={buttonVariants({ size: "pill", className: "px-2" })}
             >
               Import your spec
             </Link>
+            <Button
+              variant="outline"
+              size="pill"
+              className="px-2 lg:hidden"
+              onClick={() => setAuthOpen(true)}
+            >
+              Sign in
+            </Button>
             <a
               href="#how-it-works"
-              className={buttonVariants({ variant: "secondary", size: "pill" })}
+              className={buttonVariants({
+                variant: "secondary",
+                size: "pill",
+                className: "col-span-2",
+              })}
             >
               See how it works
             </a>
           </div>
+          <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         </div>
       </div>
 
@@ -121,9 +138,9 @@ function Demo() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div
+      <GrainPanel
         id="example"
-        className="grid scroll-mt-[calc(var(--nav-height)+16px)] grid-cols-[minmax(0,1fr)] rounded-[20px] border border-transparent bg-stage grain p-3 sm:p-6 lg:grid-cols-[minmax(0,5fr)_64px_minmax(0,7fr)] lg:items-center dark:border-border"
+        className="grid scroll-mt-[calc(var(--nav-height)+16px)] grid-cols-[minmax(0,1fr)] p-3 sm:p-6 lg:grid-cols-[minmax(0,5fr)_64px_minmax(0,7fr)] lg:items-center"
       >
         <div className="rounded-xl border bg-card p-4 sm:p-5">
           <h2 className="truncate font-mono text-sm font-medium">
@@ -234,7 +251,7 @@ function Demo() {
             </div>
           </div>
         </div>
-      </div>
+      </GrainPanel>
     </MotionConfig>
   )
 }
